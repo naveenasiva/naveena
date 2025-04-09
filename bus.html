@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Online Bus Booking</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('image.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .container {
+      max-width: 450px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.9); /* semi-transparent white box */
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #fffef1;
+    }
+
+    button {
+      padding: 10px;
+      width: 100%;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .message {
+      margin-top: 15px;
+      font-weight: bold;
+      color: green;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Bus Booking Form</h2>
+
+  <label for="name">Passenger Name:</label>
+  <input type="text" id="name" placeholder="Enter your name">
+
+  <label for="source">From:</label>
+  <select id="source">
+    <option value="kallakurichi">kallakurichi</option>
+    <option value="chennai">chennai</option>
+    <option value="villupuram">villupuram</option>
+  </select>
+
+  <label for="destination">To:</label>
+  <select id="destination">
+    <option value="chennai">chennai</option>
+    <option value="kallakurichi">kallakurichi</option>
+    <option value="villupuram">villupuram</option>
+  </select>
+
+  <label for="date">Travel Date:</label>
+  <input type="date" id="date">
+
+  <label for="bus">Select Bus:</label>
+  <select id="bus">
+    <option value="Bus 101 - AC">Bus 101 - AC</option>
+    <option value="Bus 102 - Non-AC">Bus 102 - Non-AC</option>
+    <option value="Bus 103 - Sleeper">Bus 103 - Sleeper</option>
+  </select>
+
+  <button onclick="bookBus()">Book Now</button>
+
+  <div class="message" id="message"></div>
+</div>
+
+<script>
+  function bookBus() {
+    const name = document.getElementById('name').value.trim();
+    const source = document.getElementById('source').value;
+    const destination = document.getElementById('destination').value;
+    const date = document.getElementById('date').value;
+    const bus = document.getElementById('bus').value;
+
+    if (!name || !date) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    if (source === destination) {
+      alert("Source and destination cannot be the same.");
+      return;
+    }
+
+    const ticket = `🎟️ BUS TICKET 🎟️
+
+Passenger Name: ${name}
+From: ${source}
+To: ${destination}
+Travel Date: ${date}
+Bus: ${bus}
+
+✅ Booking Confirmed! Have a safe journey!`;
+
+    document.getElementById('message').innerText = ticket;
+
+    const blob = new Blob([ticket], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `${name}_ticket.txt`;
+    link.click();
+  }
+</script>
+
+</body>
+</html>
